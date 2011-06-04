@@ -189,7 +189,7 @@ mk_header(true  = _UseOrigHeader, _LC) ->
         "\"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n\"\n"
         "\"Language-Team: LANGUAGE <LL@li.org>\\n\"\n"
         "\"MIME-Version: 1.0\\n\"\n"
-        "\"Content-Type: text/plain; charset=iso-8859-1\\n\"\n"
+        "\"Content-Type: text/plain; charset=UTF-8\\n\"\n"
         "\"Content-Transfer-Encoding: 8bit\\n\"\n".
 
  
@@ -209,10 +209,14 @@ parse_transform(Form,Opts) ->
 	true ->
 	    {Gettext_App_Name, GtxtDir, _} = get_env(),
 	    open_epot_file(Gettext_App_Name, GtxtDir),
-	    ?debug( "--- Opts --- ~p~n",[Opts]),
-	    ?debug("--- Env --- isd_type=~p , gettext_dir=~p~n", 
+	    ?debug("--- Opts --- ~p~n",[Opts]),
+	    ?debug("--- Env --- isd_type=~p , gettext_dir=~p~n",
 		   [Gettext_App_Name,GtxtDir]),
-            try pt(Form, Opts) after close_epot_file() end,
+            try
+                pt(Form, Opts)
+            after
+                close_epot_file()
+            end,
 	    Form;
 	_ ->
 	    Form
